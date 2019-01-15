@@ -46,15 +46,17 @@ class Gui(tk.Tk):
 				self.cells[(x,y)] = self.canvas.create_rectangle(x1,y1,x2,y2, fill='#D8D8D8', tags='rect')
 				self.text[(x,y)] = self.canvas.create_text(x1+7.5, y1+7.5, anchor=CENTER, text=" ")
 				self.canvas.tag_bind(self.text[(x,y)], '<Button-1>', lambda event, x=x, y=y, press=1:self.onAnyofTwoPressed(x, y, press))
+				self.canvas.tag_bind(self.text[(x,y)], '<Button-2>', lambda event, x=x, y=y, press=2:self.onAnyofTwoPressed(x, y, press))
 				self.canvas.tag_bind(self.text[(x,y)], '<Button-3>', lambda event, x=x, y=y, press=3:self.onAnyofTwoPressed(x, y, press))
 				self.canvas.tag_bind(self.text[(x,y)], '<ButtonRelease-1>', self.resetPressedState)
+				self.canvas.tag_bind(self.text[(x,y)], '<ButtonRelease-2>', self.resetPressedState)
 				self.canvas.tag_bind(self.text[(x,y)], '<ButtonRelease-3>', self.resetPressedState)
 
 	def onAnyofTwoPressed(self, x, y, press, event=None):
 		if press==1:
 			self.left_mouse_pressed = True
 			self.updateBoard(x, y)
-		if press==3:
+		if press==3 or press==2:
 			self.right_mouse_pressed = True
 			self.placeFlag(x, y)
 		if (self.left_mouse_pressed and self.right_mouse_pressed):
